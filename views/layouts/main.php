@@ -69,7 +69,7 @@ AppAsset::register($this);
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a href="<?= Url ?>"><img src="/images/home/logo.png" alt="" /></a>
+                        <a href="<?= \yii\helpers\Url::to('/')?>"><img src="/images/home/logo.png" alt="" /></a>
                     </div>
                     <div class="btn-group pull-right">
                         <div class="btn-group">
