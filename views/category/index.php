@@ -118,7 +118,7 @@ $this->title = 'My Yii Application';
                                 <div class="product-image-wrapper">
                                     <div class="single-products">
                                         <div class="productinfo text-center">
-                                            <a href="<?= \yii\helpers\Url::to(['product/view', 'id' => $hit->id]) ?>"><?= Html::img("@web/images//{$hit->img}", ['alt' => $hit->name])?></a>
+                                            <a href="<?= \yii\helpers\Url::to(['product/view', 'id' => $hit->id]) ?>"><?= Html::img("@web/images/shop/{$hit->img}", ['alt' => $hit->name])?></a>
                                             <h2>$<?= $hit->price?></h2>
                                             <p><a href="<?= \yii\helpers\Url::to(['product/view', 'id' => $hit->id]) ?>"><?= $hit->name?></a></p>
 
