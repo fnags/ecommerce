@@ -18,6 +18,9 @@ class ProductController extends AppController
     public function actionView($id) {
         $id = Yii::$app->request->get('id');
         $product = Product::findOne($id);
+        if (empty($product)) { // item does not exist
+            throw new \yii\web\HttpException(404, "Гфывф");
+        }
 //        $product = Product::find()->with('category')->where(['id' => $id]);
         $this->setMeta('E_SHOPPER |' . $product->name,$product->keywords);
         $hits = Product::find()->where(['hit' => '1'])->limit(6)->all();
@@ -25,4 +28,5 @@ class ProductController extends AppController
 
 
     }
+
 }

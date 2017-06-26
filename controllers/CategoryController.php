@@ -24,17 +24,37 @@ class CategoryController extends AppController{
 
         $id = Yii::$app->request->get('id');
 
+        $category = Category::findOne($id);
+
+        if (empty($category)) { // item does not exist
+            throw new \yii\web\HttpException(404, 'Гфывф');
+        }
+
 //        $products = Product::find()->where(['category_id' => $id])->all();
         $query = Product::find()->where(['category_id' => $id]);
 
         $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 3,'forcePageParam' => false, 'pageSizeParam' => false]);
         $products = $query->offset($pages->offset)->limit($pages->limit)->all();
 
-        $category = Category::findOne($id);
+
 
         $this->setMeta('E_SHOPPER |' . $category->name,$category->keywords);
 
         return $this->render('view',compact('pages','products'));
+
+
+    }
+    public function actionSearch($id) {
+
+        $q = Yii::$app->request->get('q');
+
+
+        $query = Product::find()->where(['like' , 'name', $q]);
+
+        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 3,'forcePageParam' => false, 'pageSizeParam' => false]);
+        $products = $query->offset($pages->offset)->limit($pages->limit)->all();
+
+        return $this->render('search',compact('pages','products','q'));
 
 
     }

@@ -314,9 +314,9 @@ use yii\widgets\LinkPager;
 
                     <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
-                            <?php $i = 0; foreach ($hits as $hit):?>
+                            <?php $count = (count($hits));$i = 0; foreach ($hits as $hit):?>
                             <?php if ($i % 3 == 0):?>
-                            <div class="item <?php if ($i == 0) echo 'active'?>">
+                            <div class="item <?php if ($i == 0 || $i == $count ) echo 'active'?>">
                                 <?php endif; ?>
                                 <div class="col-sm-4">
                                     <div class="product-image-wrapper">
@@ -324,7 +324,7 @@ use yii\widgets\LinkPager;
                                             <div class="productinfo text-center">
                                                 <?= Html::img("@web/images/shop/{$hit->img}")?>
                                                 <h2>$<?= $hit->price?></h2>
-                                                <p><?= $hit->name ?></p>
+                                                <p><a href="<?= \yii\helpers\Url::to(['product/view','id' => $hit->id])?>"><?= $hit->name ?></a></p>
                                                 <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
                                             </div>
                                         </div>
