@@ -9,7 +9,13 @@
 namespace app\controllers;
 
 
+use app\models\Articles;
+
 class BlogController extends AppController
 {
-
+    public function actionIndex() {
+        $this->setMeta('E_SHOPPER |');
+        $articles = Articles::find()->limit(4)->all();
+        return $this->render('index',compact('articles'));
+    }
 }

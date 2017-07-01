@@ -25,8 +25,6 @@ class ProductController extends AppController
         $this->setMeta('E_SHOPPER |' . $product->name,$product->keywords);
         $hits = Product::find()->where(['hit' => '1'])->limit(6)->all();
         return $this->render('view',compact('product','hits'));
-
-
     }
 
 }

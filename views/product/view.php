@@ -111,7 +111,7 @@ use yii\widgets\LinkPager;
 								</span>
                             <p><b>Availability:</b> In Stock</p>
                             <p><b>Condition:</b> New</p>
-                            <p><b>Brand:</b> <?= $product->brand ?></p>
+                            <p><b>Brand:</b> ?></p>
                             <a href=""><img src="/images/product-details/share.png" class="share img-responsive"  alt="" /></a>
                         </div><!--/product-information-->
                     </div>

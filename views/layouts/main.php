@@ -9,7 +9,10 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use app\assets\ltAppAsset;
-
+use yii\bootstrap\Modal;
+use app\models\Cart;
+use app\controllers\CartController;
+use yii\helpers\Url;
 AppAsset::register($this);
 
 ?>
@@ -95,13 +98,15 @@ AppAsset::register($this);
                         </div>
                     </div>
                 </div>
+
+
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
                             <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
                             <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
                             <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                            <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <li><a href="#" onclick=" return getCart()"><i class="fa fa-shopping-cart"></i> Cart <span></span></a></li>
                             <li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
                         </ul>
                     </div>
@@ -134,11 +139,7 @@ AppAsset::register($this);
                                     <li><a href="login.html">Login</a></li>
                                 </ul>
                             </li>
-                            <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                <ul role="menu" class="sub-menu">
-                                    <li><a href="blog.html">Blog List</a></li>
-                                    <li><a href="blog-single.html">Blog Single</a></li>
-                                </ul>
+                            <li><a href="<?= \yii\helpers\Url::to(['/blog/index'])?>">Blog</a>
                             </li>
                             <li><a href="404.html">404</a></li>
                             <li><a href="contact-us.html">Contact</a></li>
@@ -316,6 +317,20 @@ AppAsset::register($this);
     </div>
 
 </footer><!--/Footer-->
+
+
+<?php
+Modal::begin([
+    'header' => '<h2>Корзина</h2>',
+    'id' => 'cart',
+    'size' => 'modal-lg',
+    'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">Продолжить покупки</button>
+                 <a href="'. Url::to('cart/view') . '" type="button" class="btn btn-success">Оформить заказ</a>
+                 <button type="button" class="btn btn-danger" onclick="clearCart()">Oчистить корзину</button>',
+]);
+
+Modal::end();
+?>
 
 <?php $this->endBody() ?>
 </body>

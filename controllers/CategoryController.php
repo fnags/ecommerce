@@ -9,6 +9,7 @@
 namespace app\controllers;
 use app\models\Category;
 use app\models\Product;
+use app\models\Cart;
 use Yii;
 use yii\data\Pagination;
 
@@ -44,18 +45,15 @@ class CategoryController extends AppController{
 
 
     }
-    public function actionSearch($id) {
 
-        $q = Yii::$app->request->get('q');
-
-
-        $query = Product::find()->where(['like' , 'name', $q]);
-
-        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 3,'forcePageParam' => false, 'pageSizeParam' => false]);
+    public function actionSearch(){
+        $q = trim(Yii::$app->request->get('q'));
+        $this->setMeta('E-SHOPPER | Поиск: ' . $q);
+        if(!$q)
+            return $this->render('search'); 
+        $query = Product::find()->where(['like', 'name', $q]);
+        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 3, 'forcePageParam' => false, 'pageSizeParam' => false]);
         $products = $query->offset($pages->offset)->limit($pages->limit)->all();
-
-        return $this->render('search',compact('pages','products','q'));
-
-
+        return $this->render('search', compact('products', 'pages', 'q'));
     }
 }
