@@ -25,6 +25,10 @@ class OrderItems extends ActiveRecord
         return 'order_items';
     }
 
+    public function gerOrder() {
+        return $this->hasOne(Order::className(),['id' => 'order_id']);
+    }
+
     /**
      * @inheritdoc
      */
@@ -41,16 +45,5 @@ class OrderItems extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'order_id' => 'Order ID',
-            'product_id' => 'Product ID',
-            'name' => 'Name',
-            'price' => 'Price',
-            'qty_item' => 'Qty Item',
-            'sum_item' => 'Sum Item',
-        ];
-    }
+
 }

@@ -16,7 +16,7 @@ use yii\data\Pagination;
 class CategoryController extends AppController{
 
     public function actionIndex(){
-        $hits = Product::find()->where(['hit' => '1'])->limit(6)->all();
+        $hits = Product::find()->orderBy('name')->where(['hit' => '1'])->limit(6)->all();
         $this->setMeta('E_SHOPPER');
         return $this->render('index', compact('hits'));
     }
