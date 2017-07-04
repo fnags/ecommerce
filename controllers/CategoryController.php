@@ -1,59 +1,48 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: devkam
- * Date: 21.06.17
- * Time: 1:59
+ * User: Andrey
+ * Date: 08.05.2016
+ * Time: 10:00
  */
 
 namespace app\controllers;
 use app\models\Category;
 use app\models\Product;
-use app\models\Cart;
 use Yii;
 use yii\data\Pagination;
 
 class CategoryController extends AppController{
 
     public function actionIndex(){
-        $hits = Product::find()->orderBy('name')->where(['hit' => '1'])->limit(6)->all();
-        $this->setMeta('E_SHOPPER');
+        $hits = Product::find()->where(['hit' => '1'])->limit(6)->all();
+        $this->setMeta('E-SHOPPER');
         return $this->render('index', compact('hits'));
     }
 
-    public function actionView($id) {
-
-        $id = Yii::$app->request->get('id');
-
+    public function actionView($id){
+//        $id = Yii::$app->request->get('id');
         $category = Category::findOne($id);
-
-        if (empty($category)) { // item does not exist
-            throw new \yii\web\HttpException(404, 'Гфывф');
-        }
+        if(empty($category))
+            throw new \yii\web\HttpException(404, 'Такой категории нет');
 
 //        $products = Product::find()->where(['category_id' => $id])->all();
         $query = Product::find()->where(['category_id' => $id]);
-
-        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 3,'forcePageParam' => false, 'pageSizeParam' => false]);
+        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 3, 'forcePageParam' => false, 'pageSizeParam' => false]);
         $products = $query->offset($pages->offset)->limit($pages->limit)->all();
-
-
-
-        $this->setMeta('E_SHOPPER |' . $category->name,$category->keywords);
-
-        return $this->render('view',compact('pages','products'));
-
-
+        $this->setMeta('E-SHOPPER | ' . $category->name, $category->keywords, $category->description);
+        return $this->render('view', compact('products', 'pages', 'category'));
     }
 
     public function actionSearch(){
         $q = trim(Yii::$app->request->get('q'));
         $this->setMeta('E-SHOPPER | Поиск: ' . $q);
         if(!$q)
-            return $this->render('search'); 
+            return $this->render('search');
         $query = Product::find()->where(['like', 'name', $q]);
         $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 3, 'forcePageParam' => false, 'pageSizeParam' => false]);
         $products = $query->offset($pages->offset)->limit($pages->limit)->all();
         return $this->render('search', compact('products', 'pages', 'q'));
     }
-}
+
+} 

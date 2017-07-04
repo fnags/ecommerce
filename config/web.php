@@ -1,7 +1,6 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
-$db = require(__DIR__ . '/db.php');
 
 $config = [
     'id' => 'basic',
@@ -12,13 +11,13 @@ $config = [
     'modules' => [
         'admin' => [
             'class' => 'app\modules\admin\Module',
-            'layout' => 'admin',
+            'layout' => 'admin'
         ],
     ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'fsdjfsdjhfgijqwd28332yhrfnd',
+            'cookieValidationKey' => 'uvxfBK9B1S8ovnPJGbcAYyRrRCj56Qh3',
             'baseUrl' => '',
         ],
         'cache' => [
@@ -27,7 +26,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
-            'loginUrl' => 'site/login',
+//            'loginUrl' => 'cart/view'
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -37,15 +36,15 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
-//            'transport' => [
-//                'class' => 'Swift_SmtpTransport',
-//                'host' => 'smtp.mail.ru',
-//                'username' => 'username',
-//                'password' => 'password',
-//                'port' => '465',
-//                'encryption' => 'ssl',
-//            ],
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.mail.ru',
+                'username' => 'username',
+                'password' => 'password',
+                'port' => '465',
+                'encryption' => 'ssl',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -56,7 +55,7 @@ $config = [
                 ],
             ],
         ],
-        'db' => $db,
+        'db' => require(__DIR__ . '/db.php'),
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -65,8 +64,6 @@ $config = [
                 'category/<id:\d+>' => 'category/view',
                 'product/<id:\d+>' => 'product/view',
                 'search' => 'category/search',
-                'cart/<id:\d+>' => 'cart/add',
-
             ],
         ],
     ],
@@ -78,15 +75,11 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 }
 

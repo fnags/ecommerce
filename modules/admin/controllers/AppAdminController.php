@@ -27,4 +27,4 @@ class AppAdminController extends Controller{
         ];
     }
 
-}
+} 

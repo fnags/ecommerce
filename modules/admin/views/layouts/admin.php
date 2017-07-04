@@ -9,12 +9,9 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use app\assets\ltAppAsset;
-use yii\bootstrap\Modal;
-use app\models\Cart;
-use app\controllers\CartController;
-use yii\helpers\Url;
-AppAsset::register($this);
 
+AppAsset::register($this);
+ltAppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>
@@ -23,7 +20,7 @@ AppAsset::register($this);
         <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?= Html::csrfMetaTags() ?>
-        <title>Admin / <?= Html::encode($this->title) ?></title>
+        <title>Админка | <?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
 
         <?php
@@ -72,7 +69,7 @@ AppAsset::register($this);
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="logo pull-left">
-                            <a href="<?= \yii\helpers\Url::to('/')?>"><img src="/images/home/logo.png" alt="" /></a>
+                            <a href="<?= \yii\helpers\Url::home()?>"><?= Html::img('@web/images/home/logo.png', ['alt' => 'E-SHOPPER'])?></a>
                         </div>
                         <div class="btn-group pull-right">
                             <div class="btn-group">
@@ -98,15 +95,15 @@ AppAsset::register($this);
                             </div>
                         </div>
                     </div>
-
-
                     <div class="col-sm-8">
                         <div class="shop-menu pull-right">
                             <ul class="nav navbar-nav">
-                                <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
+                                <?php if(!Yii::$app->user->isGuest): ?>
+                                    <li><a href="<?= \yii\helpers\Url::to(['/site/logout'])?>"><i class="fa fa-user"></i> <?= Yii::$app->user->identity['username']?> (Выход)</a></li>
+                                <?php endif;?>
                                 <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
                                 <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                                <li><a href="/" onclick=" return getCart()"><i class="fa fa-shopping-cart"></i> Cart <span></span></a></li>
+                                <li><a href="#" onclick="return getCart()"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
                             </ul>
                         </div>
@@ -139,7 +136,11 @@ AppAsset::register($this);
                                         <li><a href="login.html">Login</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="<?= \yii\helpers\Url::to(['/blog/index'])?>">Blog</a>
+                                <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="blog.html">Blog List</a></li>
+                                        <li><a href="blog-single.html">Blog Single</a></li>
+                                    </ul>
                                 </li>
                                 <li><a href="404.html">404</a></li>
                                 <li><a href="contact-us.html">Contact</a></li>
@@ -149,7 +150,7 @@ AppAsset::register($this);
                     <div class="col-sm-3">
                         <div class="search_box pull-right">
                             <form method="get" action="<?= \yii\helpers\Url::to(['category/search'])?>">
-                                <input type="text" placeholder="Search" name="q"/>
+                                <input type="text" placeholder="Search" name="q">
                             </form>
                         </div>
                     </div>
@@ -317,9 +318,6 @@ AppAsset::register($this);
         </div>
 
     </footer><!--/Footer-->
-
-
-
 
     <?php $this->endBody() ?>
     </body>
