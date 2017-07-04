@@ -69,7 +69,8 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validatePassword($password)
     {
-        return true;
+//        return $this->password === $password;
+        return \Yii::$app->security->validatePassword($password, $this->password);
     }
 
     public function generateAuthKey(){
