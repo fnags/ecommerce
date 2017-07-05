@@ -46,5 +46,5 @@ $this->params['breadcrumbs'][] = $this->title;
             'address',
         ],
     ]) ?>
-    <?php $items = $model->OrderItems();deb?>
+    <?php $items = $model->getOrderItems();debug($items);?>
 </div>

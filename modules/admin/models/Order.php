@@ -29,7 +29,7 @@ class Order extends \yii\db\ActiveRecord
     }
 
     public function getOrderItems() {
-        return $this->hasMany(OrderItems::tableName(),['order_id' =>'id']);
+        return $this->hasMany(OrderItems::className(),['order_id' =>'id']);
     }
 
     /**
