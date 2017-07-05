@@ -68,9 +68,11 @@ ltAppAsset::register($this);
             <div class="container">
                 <div class="row">
                     <div class="col-sm-4">
+
                         <div class="logo pull-left">
-                            <a href="<?= \yii\helpers\Url::home()?>"><?= Html::img('@web/images/home/logo.png', ['alt' => 'E-SHOPPER'])?></a>
+                            <a href="<?= \yii\helpers\Url::to('/admin')?>"><?= Html::img('@web/images/home/logo.png', ['alt' => 'E-SHOPPER'])?></a>
                         </div>
+
                         <div class="btn-group pull-right">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
@@ -158,8 +160,10 @@ ltAppAsset::register($this);
             </div>
         </div><!--/header-bottom-->
     </header><!--/header-->
+    <div class="container">
+        <?= $content ?>
+    </div>
 
-    <?= $content ?>
 
     <footer id="footer"><!--Footer-->
         <div class="footer-top">
